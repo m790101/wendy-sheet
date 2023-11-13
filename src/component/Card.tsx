@@ -7,23 +7,22 @@ import itemApi from "../api/itemApi";
 const Card = ({ data, setIsRefresh }) => {
   const [itemNum, setItemNum] = useState(data.in_stock)
   const [isVisible, setIsVisible] = useState(false)
+  const [isDelete, setIsDelete] = useState(false)
 
   return (
     <>
       <div className="card">
         <div className="d-flex justify-content-end">
           <button className="btn btn-danger" onClick={() => {
-            deleteItem(data)
-            setIsRefresh(true)
+            setIsDelete(true)
           }}>X</button>
         </div>
         <div className="card-body">
           <blockquote className="blockquote mb-0">
-            {/* <p> 類別：{data.item.type}</p> */}
-            <p className="fw-bold">品名：</p>
-            <p className="fw-bold">{data.name}</p>
+            <p> 類別：</p>
+            <p className="fs-5">品名：<span className="fw-bold">{data.name}</span></p>
             <p className="fw-bold">庫存：{itemNum} </p>
-            <div className="p-2">
+            <div className="p-3 d-flex justify-content-center gap-3">
               <button className="fs-2 m-1 btn btn-info" onClick={() => setItemNum(itemNum + 1)}>+</button>
               <button className="fs-2 m-1 btn btn-info" onClick={() => setItemNum(itemNum - 1)}>-</button>
             </div>
@@ -42,6 +41,23 @@ const Card = ({ data, setIsRefresh }) => {
         mainBtn={{ label: "Ok", onClick: () => { setIsVisible(false) } }}
         onRequestClose={() => { setIsVisible(false) }} >
       </FormModal>
+      
+      <FormModal
+        title="確定刪除?"
+        hasCloseBtn={true}
+        maxWidth="sm"
+        isVisible={isDelete}
+        mainBtn={{ label: "Ok", onClick: () => { 
+          deleteItem(data)
+          setIsRefresh(true)
+          setIsDelete(false)
+         } }}
+        minorBtn={{
+          label: "Cancel",
+        }}
+        onRequestClose={() => {
+          setIsDelete(false)
+        }}></FormModal>
     </>
   );
 };
@@ -73,11 +89,10 @@ async function submit(data) {
 async function deleteItem(data) {
   const id = data._id
   const res = await itemApi.deleteItems({ id })
-  console.log(res);
   const { header: { code, message } } = res.data
   if (code === '0000') {
     showMsgBox({
-      content: `已成功刪除!`,
+      content: `已成功刪除${data.name}!`,
       titleImg: "success",
       title: "成功",
       mainBtn: { label: "我知道了" },
