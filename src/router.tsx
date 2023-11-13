@@ -3,14 +3,14 @@ import {
   } from "react-router-dom";
   import App from "./App";
   import Home from "./pages/Home/Home";
-import Db from "./pages/Db";
+  import Error from "./pages/Error/Error";
   
   
   
   
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "",
       element: <App />,
       children: [
         {
@@ -18,9 +18,9 @@ import Db from "./pages/Db";
           element: <Home />,
         },
         {
-          path: "/db",
-          element: <Db />,
-        },
+          path: "/error",
+          element: <Error />,
+        }
       ],
     },
   ]);
