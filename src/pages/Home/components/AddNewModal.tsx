@@ -5,6 +5,7 @@ import Yup from "../../../utils/validations/yupSchemaExtended"
 import { showMsgBox } from "../../../utils/helpers/msgHelper"
 import itemApi from "../../../api/itemApi"
 import errorService from "../../../service/errorService"
+import { SetStateAction } from "react"
 
 const initialValues = {
     itemName: "",
@@ -17,7 +18,14 @@ const validationSchema = Yup.object().shape({
 })
 
 
-const AddNewModal = ({ isVisible, setIsVisible, setIsRefresh }) => {
+interface AddNewModalProps{
+    isVisible:boolean,
+    setIsVisible:React.Dispatch<SetStateAction<boolean>>,
+    setIsRefresh:React.Dispatch<SetStateAction<boolean>>
+}
+
+
+const AddNewModal = ({ isVisible, setIsVisible, setIsRefresh }:AddNewModalProps) => {
 
     const formik = useFormik({
         initialValues,
@@ -107,7 +115,13 @@ const AddNewModal = ({ isVisible, setIsVisible, setIsRefresh }) => {
 export default AddNewModal
 
 
-const handleAddSubmit = async (data) => {
+interface ItemData{
+    itemName:string,
+    itemNumber:number,
+  
+  }
+
+const handleAddSubmit = async (data:ItemData) => {
     const res = await itemApi.addItems({ data })
     const { header: { code, message } } = res.data
 

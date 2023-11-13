@@ -10,25 +10,31 @@ interface ItemData{
 
 }
 
+interface ItemAddData{
+  itemName:string
+  itemNumber:number,
+
+}
+
 const getItems = async() => {
     const response = await get(url + "allItem");
     return response;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const updateItem = async ({data}):Promise<any> => {
+const updateItem = async ({data}:{data:ItemData}):Promise<any> => {
   const response = await post(url + "update",{data});
   return response;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const addItems = async ({data}):Promise<any> => {
+const addItems = async ({data}:{data:ItemAddData}):Promise<any> => {
   const response = await post(url + "add",{data});
   return response;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const deleteItems = async ({id}):Promise<any> => {
+const deleteItems = async ({id}:{id:string}):Promise<any> => {
     const response = await post(url + "delete",{id});
     return response;
   };

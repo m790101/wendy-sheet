@@ -1,6 +1,14 @@
-import { useState } from "react";
+import { MouseEvent, SetStateAction, useState } from "react";
 
-const Navbar = ({ dataList, setsearchDataList }) => {
+
+interface NavbarProps {
+    dataList:ItemData[],
+    setsearchDataList:React.Dispatch<SetStateAction<never[]>>
+}
+
+
+
+const Navbar = ({ dataList, setsearchDataList }:NavbarProps) => {
     const [searchText, setSearchText] = useState('')
 
     return (
@@ -20,9 +28,15 @@ const Navbar = ({ dataList, setsearchDataList }) => {
 
 export default Navbar;
 
+interface ItemData{
+    _id:string,
+    name:string
+    in_stock:number,
+  
+  }
 
-
-function handleSearch(e, searchText, dataList, setsearchDataList) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function handleSearch(e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, searchText: string, dataList: ItemData[], setsearchDataList: (arg0: any) => void) {
     e.preventDefault()
     const filterData = dataList.filter((item) => {
         return item.name.includes(searchText.trim())
