@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import Card from '../../component/Card';
 import AddNewModal from './components/AddNewModal';
 import itemApi from '../../api/itemApi';
@@ -16,7 +16,7 @@ const Home = () => {
         getItem(setDataListInitial)
         setIsRefresh(false)
     }
-    function setDataListInitial(data){
+    function setDataListInitial(data: SetStateAction<never[]>){
         setDataList(data)
         setsearchDataList(data)
     }
@@ -62,7 +62,8 @@ export default Home;
 
 
 
-const getItem = async (callback) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getItem = async (callback: { (data: SetStateAction<never[]>): void; (data: SetStateAction<never[]>): void; (arg0: any): void; }) => {
     try {
         const res = await itemApi.getItems();
         const result = res.body

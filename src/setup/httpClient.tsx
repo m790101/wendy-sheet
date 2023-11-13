@@ -3,12 +3,12 @@ import axios from "./setupAxios";
 
 /**
  * @description 呼叫api發生例外錯誤時的例外處理
- * @param {string} url api路徑
+ * @param {string} _url api路徑
  * @param {object} error api呼叫後回傳的錯誤
  * @returns {object}
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const errorHandle = (url: string, error: any): object => {
+const errorHandle = (_url: string, error: any): object => {
   const { response } = error;
   console.log(
     `%c 💩💩💩 API發生例外錯誤 💩💩💩${

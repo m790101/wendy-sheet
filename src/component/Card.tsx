@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import FormModal from "./FormModal";
 import { showMsgBox } from "../utils/helpers/msgHelper";
 import errorService from "../service/errorService";
 import itemApi from "../api/itemApi";
 
-const Card = ({ data, setIsRefresh }) => {
+interface CardProps {
+  data:ItemData,
+  setIsRefresh: React.Dispatch<SetStateAction<boolean>>
+}
+
+
+const Card = ({ data, setIsRefresh }:CardProps) => {
   const [itemNum, setItemNum] = useState(data.in_stock)
   const [isVisible, setIsVisible] = useState(false)
   const [isDelete, setIsDelete] = useState(false)
@@ -62,7 +68,14 @@ const Card = ({ data, setIsRefresh }) => {
   );
 };
 
-function updateNumber(data, num) {
+interface ItemData{
+  _id:string,
+  name:string
+  in_stock:number,
+
+}
+
+function updateNumber(data: ItemData, num: number) {
   return {
     ...data,
     in_stock: num
@@ -70,7 +83,7 @@ function updateNumber(data, num) {
 }
 
 
-async function submit(data) {
+async function submit(data:ItemData) {
   const res = await itemApi.updateItem({ data })
   const { header: { code, message } } = res.data
   if (code === '0000') {
@@ -86,7 +99,7 @@ async function submit(data) {
 }
 
 
-async function deleteItem(data) {
+async function deleteItem(data: { _id: string; name: string;  }) {
   const id = data._id
   const res = await itemApi.deleteItems({ id })
   const { header: { code, message } } = res.data
