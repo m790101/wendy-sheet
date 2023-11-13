@@ -1,3 +1,3 @@
 export default{
-   apiUrl :'http://localhost:1337/'
+   apiUrl :'https://wendy-server.onrender.com/'
 }
