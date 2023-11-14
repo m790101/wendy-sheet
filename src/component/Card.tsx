@@ -3,21 +3,22 @@ import FormModal from "./FormModal";
 import { showMsgBox } from "../utils/helpers/msgHelper";
 import errorService from "../service/errorService";
 import itemApi from "../api/itemApi";
+import React from "react";
 
 interface CardProps {
-  data:ItemData,
+  data: ItemData,
   setIsRefresh: React.Dispatch<SetStateAction<boolean>>
 }
 
 
-const Card = ({ data, setIsRefresh }:CardProps) => {
+const Card = ({ data, setIsRefresh }: CardProps) => {
   const [itemNum, setItemNum] = useState(data.in_stock)
   const [isVisible, setIsVisible] = useState(false)
   const [isDelete, setIsDelete] = useState(false)
 
   return (
     <>
-      <div className="card">
+      <div className="card p-3">
         <div className="d-flex justify-content-end">
           <button className="btn btn-danger" onClick={() => {
             setIsDelete(true)
@@ -27,7 +28,10 @@ const Card = ({ data, setIsRefresh }:CardProps) => {
           <blockquote className="blockquote mb-0">
             <p> 類別：</p>
             <p className="fs-5">品名：<span className="fw-bold">{data.name}</span></p>
-            <p className="fw-bold">庫存：{itemNum} </p>
+            <div className="mb-3 row align-items-center">
+              <label className=" col" htmlFor="itemNumber">庫存：</label>
+              <input type="number" id="itemNumber" className="form-control col" value={itemNum} onChange={(e) => { (setItemNum(Number(e.target.value))) }} />
+            </div>
             <div className="p-3 d-flex justify-content-center gap-3">
               <button className="fs-2 m-1 btn btn-info" onClick={() => setItemNum(itemNum + 1)}>+</button>
               <button className="fs-2 m-1 btn btn-info" onClick={() => setItemNum(itemNum - 1)}>-</button>
@@ -37,7 +41,7 @@ const Card = ({ data, setIsRefresh }:CardProps) => {
         <button className="btn btn-primary" onClick={() => {
           const dataUpdated = updateNumber(data, itemNum)
           submit(dataUpdated)
-        }}>submit</button>
+        }}>更新</button>
       </div>
       <FormModal
         title="更新成功"
@@ -47,17 +51,19 @@ const Card = ({ data, setIsRefresh }:CardProps) => {
         mainBtn={{ label: "Ok", onClick: () => { setIsVisible(false) } }}
         onRequestClose={() => { setIsVisible(false) }} >
       </FormModal>
-      
+
       <FormModal
         title="確定刪除?"
         hasCloseBtn={true}
         maxWidth="sm"
         isVisible={isDelete}
-        mainBtn={{ label: "Ok", onClick: () => { 
-          deleteItem(data)
-          setIsRefresh(true)
-          setIsDelete(false)
-         } }}
+        mainBtn={{
+          label: "Ok", onClick: async () => {
+            await deleteItem(data)
+            setIsDelete(false)
+            setIsRefresh(true)
+          }
+        }}
         minorBtn={{
           label: "Cancel",
         }}
@@ -68,10 +74,10 @@ const Card = ({ data, setIsRefresh }:CardProps) => {
   );
 };
 
-interface ItemData{
-  _id:string,
-  name:string
-  in_stock:number,
+interface ItemData {
+  _id: string,
+  name: string
+  in_stock: number,
 
 }
 
@@ -83,7 +89,7 @@ function updateNumber(data: ItemData, num: number) {
 }
 
 
-async function submit(data:ItemData) {
+async function submit(data: ItemData) {
   const res = await itemApi.updateItem({ data })
   const { header: { code, message } } = res.data
   if (code === '0000') {
@@ -99,7 +105,7 @@ async function submit(data:ItemData) {
 }
 
 
-async function deleteItem(data: { _id: string; name: string;  }) {
+async function deleteItem(data: { _id: string; name: string; }) {
   const id = data._id
   const res = await itemApi.deleteItems({ id })
   const { header: { code, message } } = res.data
