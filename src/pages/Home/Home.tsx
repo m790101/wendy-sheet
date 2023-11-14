@@ -3,12 +3,13 @@ import Card from '../../component/Card';
 import AddNewModal from './components/AddNewModal';
 import itemApi from '../../api/itemApi';
 import SearchBar from './components/Searchbar';
+import React from 'react';
 
 
 
 const Home = () => {
     const [dataList, setDataList] = useState([])
-    const [searchDataList, setsearchDataList] = useState([])
+    const [searchDataList, setSearchDataList] = useState([])
     const [isVisible, setIsVisible] = useState(false)
     const [isRefresh, setIsRefresh] = useState(false)
 
@@ -18,7 +19,7 @@ const Home = () => {
     }
     function setDataListInitial(data: SetStateAction<never[]>){
         setDataList(data)
-        setsearchDataList(data)
+        setSearchDataList(data)
     }
 
     useEffect(() => {
@@ -28,7 +29,7 @@ const Home = () => {
 
     return (
         <>
-            <SearchBar dataList={dataList} setsearchDataList={setsearchDataList}></SearchBar>
+            <SearchBar dataList={dataList} setSearchDataList={setSearchDataList}></SearchBar>
             <AddNewModal
                 isVisible={isVisible}
                 setIsVisible={setIsVisible}
