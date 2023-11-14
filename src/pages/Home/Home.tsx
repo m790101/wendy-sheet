@@ -3,7 +3,6 @@ import Card from '../../component/Card';
 import AddNewModal from './components/AddNewModal';
 import itemApi from '../../api/itemApi';
 import SearchBar from './components/Searchbar';
-import React from 'react';
 
 
 
