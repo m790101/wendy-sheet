@@ -32,9 +32,9 @@ const Card = ({ data, setIsRefresh }: CardProps) => {
               <label className=" col" htmlFor="itemNumber">庫存：</label>
               <input type="number" id="itemNumber" className="form-control col" value={itemNum} onChange={(e) => { (setItemNum(Number(e.target.value))) }} />
             </div>
-            <div className="p-3 d-flex justify-content-center gap-3">
-              <button className="fs-2 m-1 btn btn-info" onClick={() => setItemNum(itemNum + 1)}>+</button>
-              <button className="fs-2 m-1 btn btn-info" onClick={() => setItemNum(itemNum - 1)}>-</button>
+            <div className="p-3 d-flex justify-content-center gap-5">
+              <button className="fs-4 m-1 btn btn-info" onClick={() => setItemNum(itemNum + 1)}>+</button>
+              <button className="fs-4 m-1 btn btn-info" onClick={() => setItemNum(itemNum - 1)}>-</button>
             </div>
           </blockquote>
         </div>

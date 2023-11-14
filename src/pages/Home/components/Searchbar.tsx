@@ -14,11 +14,11 @@ const Navbar = ({ dataList, setSearchDataList }:NavbarProps) => {
 
     return (
         <>
-            <nav className="mb-3">
-                <div className="">
+            <nav className=" position-fixed z-3 navbar">
+                <div className="search_section">
                     <div className="d-flex flex-column gap-2">
-                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={(e) => { setSearchText(e.target.value) }} />
-                        <button className="btn btn-outline-success" type="submit" onClick={(e) => { handleSearch(e, searchText, dataList, setSearchDataList) }}>搜尋</button>
+                        <input className="form-control me-2 " type="search" placeholder="Search" aria-label="Search" onChange={(e) => { setSearchText(e.target.value) }} />
+                        <button className="btn btn-success" type="submit" onClick={(e) => { handleSearch(e, searchText, dataList, setSearchDataList) }}>搜尋</button>
                     </div>
                 </div>
             </nav>

@@ -3,6 +3,7 @@ import Card from '../../component/Card';
 import AddNewModal from './components/AddNewModal';
 import itemApi from '../../api/itemApi';
 import SearchBar from './components/Searchbar';
+import Footer from '../../component/Footer';
 
 
 
@@ -25,17 +26,17 @@ const Home = () => {
         getItem(setDataListInitial)
     }, [])
 
-
     return (
         <>
             <SearchBar dataList={dataList} setSearchDataList={setSearchDataList}></SearchBar>
+            <div className=' home'>
             <AddNewModal
                 isVisible={isVisible}
                 setIsVisible={setIsVisible}
                 setIsRefresh={setIsRefresh}
             ></AddNewModal>
             <div className='d-flex justify-content-center'>
-                <button className='btn btn-success  w-100' onClick={() => { setIsVisible(true) }}>新增物品</button>
+                <button className='btn btn-success  w-50 ' onClick={() => { setIsVisible(true) }}>新增物品</button>
             </div>
 
             <div className='d-flex flex-column'>
@@ -51,6 +52,8 @@ const Home = () => {
                     )
                 }
             </div>
+            </div>
+            <Footer></Footer>
 
 
 
