@@ -36,7 +36,7 @@ const Home = () => {
                 setIsRefresh={setIsRefresh}
             ></AddNewModal>
             <div className='d-flex justify-content-center'>
-                <button className='btn btn-success  w-100' onClick={() => { setIsVisible(true) }}>add item</button>
+                <button className='btn btn-success  w-100' onClick={() => { setIsVisible(true) }}>新增物品</button>
             </div>
 
             <div className='d-flex flex-column'>
