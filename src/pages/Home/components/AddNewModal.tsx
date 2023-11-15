@@ -79,7 +79,7 @@ const AddNewModal = ({ isVisible, setIsVisible, setIsRefresh }:AddNewModalProps)
                                 formik.touched.itemName && Boolean(formik.errors.itemName)
                             }
                         >
-                            {formik.errors.itemName
+                            {formik.touched.itemName
                                 ? formik.errors.itemName
                                 : null}
                         </FormHelperText>
@@ -100,7 +100,7 @@ const AddNewModal = ({ isVisible, setIsVisible, setIsRefresh }:AddNewModalProps)
                                 formik.touched.itemNumber && Boolean(formik.errors.itemNumber)
                             }
                         >
-                            {formik.errors.itemNumber
+                            {formik.touched.itemNumber
                                 ? formik.errors.itemNumber
                                 : null}
                         </FormHelperText>
