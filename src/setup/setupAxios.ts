@@ -1,5 +1,5 @@
 import axios from "axios";
-import { alterLoading } from "../store/appSlice";
+import { alterLoading } from "../store/loadSlice";
 import store from "../store/store";
 
 axios.interceptors.request.use(

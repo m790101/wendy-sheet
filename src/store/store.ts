@@ -1,12 +1,14 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import loading from './appSlice'
+import loading from './loadSlice'
 import msgSlice from './msgSlice';
+import appSlice from './appSlice';
 // import apiLoadingMiddleware from './middleware/apiLoadingMiddleware';
 
 const combinedReducer = combineReducers({
     // auth,
     loading:loading.reducer,
     msg: msgSlice.reducer,
+    app: appSlice.reducer,
   });
 
 
