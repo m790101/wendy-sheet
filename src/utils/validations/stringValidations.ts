@@ -70,9 +70,9 @@ const requireErrorMsg = function (fieldName: string, type: string) {
   if (fieldName) {
     switch (type) {
       case "select":
-        return "請選擇"
+        return `請選擇${fieldName}`
       default:
-        return "此為必填"
+        return `請輸入${fieldName}`
     }
   } else {
     switch (type) {
