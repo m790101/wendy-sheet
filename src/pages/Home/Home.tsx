@@ -4,6 +4,7 @@ import AddNewModal from './components/AddNewModal';
 import itemApi from '../../api/itemApi';
 import SearchBar from './components/Searchbar';
 import Footer from '../../component/Footer';
+import Papa from 'papaparse';
 
 
 
@@ -35,8 +36,15 @@ const Home = () => {
                 setIsVisible={setIsVisible}
                 setIsRefresh={setIsRefresh}
             ></AddNewModal>
-            <div className='d-flex justify-content-center'>
-                <button className='btn btn-success  w-50 ' onClick={() => { setIsVisible(true) }}>新增物品</button>
+            <div className='d-flex justify-content-center gap-3'>
+                <button className='btn btn-success ' onClick={() => { setIsVisible(true) }}>新增物品</button>
+                <button className='btn btn-success px-3 ' onClick={() => {
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    const dataListWithoutId = dataList.map(({ _id, __v, ...rest}:{_id:string, __v:string,name: string, in_stock: number}) => rest);
+                    const csv = Papa.unparse(dataListWithoutId);
+                    exportData(csv,'result.csv', 'text/csv;charset=utf-8;')
+                    
+                    }}>輸出檔案</button>
             </div>
 
             <div className='d-flex flex-column'>
@@ -78,6 +86,14 @@ const getItem = async (callback: { (data: SetStateAction<never[]>): void; (data:
 };
 
 
-
-
-
+// Function to export data as a file
+const exportData = (data:string, fileName:string, type:string) => {
+    // Create a link and download the file
+    const blob = new Blob([data], { type });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
