@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { AnyAction } from "@reduxjs/toolkit";
 import { updateLoginInfo } from "../../../store/appSlice";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import storage from "../../../utils/storage";
 
 
 interface NavbarProps {
@@ -55,8 +56,8 @@ function handleSearch(e: React.ChangeEvent<HTMLInputElement>, dataList: ItemData
 
 }
 
-function logout(dispatch:Dispatch<AnyAction>,navigate: NavigateFunction){
-    // localStorage.removeItem('token')
+async function logout(dispatch:Dispatch<AnyAction>,navigate: NavigateFunction){
+    await storage.removeLocalStorage('ls')
     dispatch(updateLoginInfo({isLogin:false}))
     navigate('/login')
 }
