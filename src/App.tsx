@@ -6,12 +6,19 @@ import { RootState } from './store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { MsgBox } from './component/MsgBox';
 import { selectCurrentGlobalMsg, removeCurrentGlobalMsg } from './store/msgSlice';
+import storage from './utils/storage';
+import { updateLoginInfo } from './store/appSlice';
 
 
 function App() {
   const dispatch = useDispatch()
   const isLoading = useSelector((state:RootState) => state.loading.isLoading);
   const currentGlobalMsg = useSelector(selectCurrentGlobalMsg)
+
+
+  if (storage.loginState) {
+    dispatch(updateLoginInfo({isLogin:storage.loginState}))
+  }
 
   return (
     <>

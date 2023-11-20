@@ -6,11 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { showMsgBox } from "../../utils/helpers/msgHelper";
 import { useDispatch } from "react-redux";
 import { updateLoginInfo } from "../../store/appSlice";
+import storage from "../../utils/storage";
+import { useEffect } from "react";
 
 
 const Login = () => {
 
     const navigate = useNavigate();
+
 
     const dispatch = useDispatch()
 
@@ -30,22 +33,42 @@ const Login = () => {
     }
 
 
+
+    useEffect(() => {
+        (async () => {
+            const storageLogin = await storage.getLocalStorage(storage.key.loginState)
+            if (storageLogin) {
+                dispatch(updateLoginInfo({ isLogin: true }))
+                navigate('/main/home')
+                return 
+            }
+        })()
+    }, [dispatch, navigate])
+
+
     const formik = useFormik({
         initialValues,
         validationSchema,
         enableReinitialize: true,
-        onSubmit: (values) => {
-           const  result = handleSubmit(values, fakeAccount)
-           if(result){
-            dispatch(updateLoginInfo({isLogin:true}))
-            showMsgBox({
-                content: `登入成功!`,
-                titleImg: "success",
-                title: "成功",
-                mainBtn: { label: "我知道了" , onClick: () => navigate('/main/home')},
-              })
+        onSubmit: async (values) => {
+            const result = handleSubmit(values, fakeAccount)
+            if (result) {
+                dispatch(updateLoginInfo({ isLogin: true }))
 
-           } 
+                const storageLogin = await storage.getLocalStorage(storage.key.loginState)
+
+                if (!storageLogin||storageLogin === "false") {
+                    await storage.setLocalStorage(storage.key.loginState, true)
+                }
+
+                showMsgBox({
+                    content: `登入成功!`,
+                    titleImg: "success",
+                    title: "成功",
+                    mainBtn: { label: "我知道了", onClick: () => navigate('/main/home') },
+                })
+
+            }
             handleResetForm()
 
         },
@@ -124,9 +147,7 @@ interface LoginValues {
 }
 
 
-function handleSubmit(values:LoginValues, fakeAccount: LoginValues) {
-
-    console.log(values)
+function handleSubmit(values: LoginValues, fakeAccount: LoginValues) {
     const result = values.userName === fakeAccount.userName && values.userPassword === fakeAccount.userPassword
     return result ? result : errorService.showErrorMsg('登入失敗')
 }
