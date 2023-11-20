@@ -7,7 +7,7 @@ import { showMsgBox } from "../../utils/helpers/msgHelper";
 import { useDispatch } from "react-redux";
 import { updateLoginInfo } from "../../store/appSlice";
 import storage from "../../utils/storage";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 
 const Login = () => {
@@ -34,7 +34,7 @@ const Login = () => {
 
 
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         (async () => {
             const storageLogin = await storage.getLocalStorage(storage.key.loginState)
             if (storageLogin) {
