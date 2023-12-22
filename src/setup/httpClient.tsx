@@ -1,5 +1,6 @@
 import errorService from "../service/errorService";
-import axios from "./setupAxios";
+// import axios from "./setupAxios";
+import axios from "axios";
 
 /**
  * @description 呼叫api發生例外錯誤時的例外處理

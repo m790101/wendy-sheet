@@ -12,7 +12,7 @@ import { updateLoginInfo } from './store/appSlice';
 
 function App() {
   const dispatch = useDispatch()
-  const isLoading = useSelector((state:RootState) => state.loading.isLoading);
+  const loadingCounter = useSelector((state:RootState) => state.loading.loadingApiList.length);
   const currentGlobalMsg = useSelector(selectCurrentGlobalMsg)
 
 
@@ -22,7 +22,8 @@ function App() {
 
   return (
     <>
-    {isLoading && <LoadingMask />}
+    {loadingCounter > 0 && <LoadingMask />}
+
     {/* 全域文字訊息彈跳視窗 */}
     {currentGlobalMsg && (
         <MsgBox

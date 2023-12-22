@@ -11,10 +11,7 @@ import { useLayoutEffect } from "react";
 
 
 const Login = () => {
-
     const navigate = useNavigate();
-
-
     const dispatch = useDispatch()
 
     const initialValues = {
@@ -31,7 +28,6 @@ const Login = () => {
         userName: "wendy",
         userPassword: "0000"
     }
-
 
 
     useLayoutEffect(() => {

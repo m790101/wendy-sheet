@@ -1,9 +1,9 @@
-const Footer = ({children}) => {
+const HomeFooter = () => {
     return (
         <div className="footer d-flex justify-content-center align-items-center gap-5">
-            {children}
+            1234
         </div>
     )
 }
 
-export default Footer;
+export default HomeFooter;

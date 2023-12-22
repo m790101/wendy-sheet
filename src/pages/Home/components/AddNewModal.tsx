@@ -3,10 +3,10 @@ import FormModal from "../../../component/FormModal"
 import { useFormik } from "formik"
 import Yup from "../../../utils/validations/yupSchemaExtended"
 import { showMsgBox } from "../../../utils/helpers/msgHelper"
-import itemApi from "../../../api/itemApi"
 import errorService from "../../../service/errorService"
 import { SetStateAction } from "react"
 import React from "react"
+import Api01 from "../../../service/apiService/apiList/api01"
 
 const initialValues = {
     itemName: "",
@@ -27,13 +27,14 @@ interface AddNewModalProps{
 
 
 const AddNewModal = ({ isVisible, setIsVisible, setIsRefresh }:AddNewModalProps) => {
+    const [addItems] = Api01.useAddItemsMutation()
 
     const formik = useFormik({
         initialValues,
         validationSchema,
         enableReinitialize: true,
         onSubmit: async(values) => {
-            await handleAddSubmit(values)
+            await handleAddSubmit(values,addItems)
             handleResetForm()
             setIsVisible(false)
             setIsRefresh(true)
@@ -122,15 +123,16 @@ interface ItemData{
   
   }
 
-const handleAddSubmit = async (data:ItemData) => {
-    const res = await itemApi.addItems({ data })
-    const { header: { code, message } } = res.data
+const handleAddSubmit = async (data:ItemData,addItems) => {
+    // const res = await itemApi.addItems({ data })
+    const res = await addItems({data}).unwrap()
+    const { header: { code, message } } = res
 
     if (code === '0000') {
         showMsgBox({
             content: `已成功新增${data.itemName}!`,
             titleImg: "success",
-            title: "更新成功",
+            title: "新增成功",
             mainBtn: { label: "我知道了" },
         })
     } else {
