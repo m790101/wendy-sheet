@@ -1,10 +1,9 @@
-import { GetItemsRes, IBaseRes } from "../../models/apiModel01";
 import { baseApiService } from "../baseApiService";
 
 
  const Api01 = baseApiService.injectEndpoints({
   endpoints: (builder) => ({
-    getItems: builder.mutation<IBaseRes<GetItemsRes[]>,void>({
+    getItems: builder.mutation({
         query: () => ({
             url: "/allItem",
             method: "get",

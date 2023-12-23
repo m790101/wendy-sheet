@@ -2,11 +2,10 @@ import { FormControl, FormHelperText, TextField } from "@mui/material"
 import FormModal from "../../../component/FormModal"
 import { useFormik } from "formik"
 import Yup from "../../../utils/validations/yupSchemaExtended"
-import { showMsgBox } from "../../../utils/helpers/msgHelper"
-import errorService from "../../../service/errorService"
 import { SetStateAction } from "react"
 import React from "react"
-import Api01 from "../../../service/apiService/apiList/api01"
+import useGetItemApi from "../hook/useGetItemApi"
+import useAddItemApi from "../hook/useAddItemApi"
 
 const initialValues = {
     itemName: "",
@@ -22,22 +21,24 @@ const validationSchema = Yup.object().shape({
 interface AddNewModalProps{
     isVisible:boolean,
     setIsVisible:React.Dispatch<SetStateAction<boolean>>,
-    setIsRefresh:React.Dispatch<SetStateAction<boolean>>
+    setDataListInitial:(data: SetStateAction<never[]>) => void
 }
 
 
-const AddNewModal = ({ isVisible, setIsVisible, setIsRefresh }:AddNewModalProps) => {
-    const [addItems] = Api01.useAddItemsMutation()
+const AddNewModal = ({ isVisible, setIsVisible, setDataListInitial }:AddNewModalProps) => {
+    const {getItemsApi} = useGetItemApi()
+    const {addItemsApi} = useAddItemApi()
 
     const formik = useFormik({
         initialValues,
         validationSchema,
         enableReinitialize: true,
         onSubmit: async(values) => {
-            await handleAddSubmit(values,addItems)
+            // await handleAddSubmit(values,addItems)
             handleResetForm()
+            await addItemsApi(values)
+            await getItemsApi(setDataListInitial)
             setIsVisible(false)
-            setIsRefresh(true)
         },
     })
 
@@ -117,27 +118,5 @@ const AddNewModal = ({ isVisible, setIsVisible, setIsRefresh }:AddNewModalProps)
 export default AddNewModal
 
 
-interface ItemData{
-    itemName:string,
-    itemNumber:number,
-  
-  }
-
-const handleAddSubmit = async (data:ItemData,addItems) => {
-    // const res = await itemApi.addItems({ data })
-    const res = await addItems({data}).unwrap()
-    const { header: { code, message } } = res
-
-    if (code === '0000') {
-        showMsgBox({
-            content: `已成功新增${data.itemName}!`,
-            titleImg: "success",
-            title: "新增成功",
-            mainBtn: { label: "我知道了" },
-        })
-    } else {
-        errorService.showErrorMsg(message)
-    }
-}
 
 
