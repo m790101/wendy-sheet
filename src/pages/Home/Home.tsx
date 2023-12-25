@@ -1,11 +1,10 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import AddNewModal from './components/AddNewModal';
 import SearchBar from './components/Searchbar';
-import Papa from 'papaparse';
 import ItemCard from './components/ItemCard';
 import Footer from '../../component/Footer';
-import exportData from '../../utils/hooks/exportData';
 import useGetItemApi from './hook/useGetItemApi';
+import ExportFileBtn from './components/ExportFileBtn';
 
 
 
@@ -51,13 +50,9 @@ const Home = () => {
             <Footer>
                 <div className='d-flex justify-content-center gap-3'>
                     <button className='btn btn-success ' onClick={() => { setIsVisible(true) }}>新增物品</button>
-                    <button className='btn btn-success px-3 ' onClick={() => {
-                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                        const dataListWithoutId = dataList.map(({ _id, __v, ...rest }: { _id: string, __v: string, name: string, in_stock: number }) => rest);
-                        const csv = Papa.unparse(dataListWithoutId);
-                        exportData(csv, 'result.csv', 'text/csv;charset=utf-8;')
-
-                    }}>輸出檔案</button>
+                    <ExportFileBtn
+                    dataList={dataList}
+                    />
                 </div>
             </Footer>
         </>
