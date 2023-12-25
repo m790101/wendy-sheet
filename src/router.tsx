@@ -4,7 +4,6 @@ import {
 } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home/Home";
-import Error from "./pages/Error/Error";
 import Login from "./pages/Login/Login";
 import HomeLayout from "./pages";
 
