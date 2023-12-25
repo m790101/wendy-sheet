@@ -15,3 +15,45 @@
         color: white;
     }
 }
+
+.btn-num-section{
+    height:5rem;
+}
+
+
+.btn-num{
+    display: block;
+    background-color: var(--blue-300);
+    width:60px;
+    height:60px;
+    border-radius: 50%;
+    color: var(--gray-500);
+    position: relative;
+    &.plus::after{
+        content: "+";
+        position: absolute;
+        display: block;
+        transform: translate(-50%,-50%);
+        left: 50%;
+    }
+    &.minus::after{
+        content: "-";
+        font-size: 2rem;
+        position: absolute;
+        display: block;
+        transform: translate(-50%,-50%);
+        left: 50%;
+    }
+}
+
+
+.btn-save{
+    color: var(--gray-100);
+    background-color: var(--green-500);
+    border-radius: 30px;
+}
+
+
+.item-number-input{
+    max-width: 120px;
+}
