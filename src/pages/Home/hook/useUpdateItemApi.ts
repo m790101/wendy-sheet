@@ -4,8 +4,11 @@ import { showMsgBox } from "../../../utils/helpers/msgHelper";
 
 interface ItemData {
     _id: string;
+    type: string;
     name: string;
+    unit: string;
     in_stock: number;
+    remark: string;
   }
 
 

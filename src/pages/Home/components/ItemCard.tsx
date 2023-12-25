@@ -13,9 +13,9 @@ const ItemCard = ({ data, setDataListInitial }: CardProps) => {
   const [itemNum, setItemNum] = useState(data.in_stock);
   const [isDelete, setIsDelete] = useState(false);
 
-  const {deleteItemsApi} = useDeleteItemApi()
-  const {getItemsApi} = useGetItemApi()
-  const {updateItemApi} = useUpdateItemApi()
+  const { deleteItemsApi } = useDeleteItemApi()
+  const { getItemsApi } = useGetItemApi()
+  const { updateItemApi } = useUpdateItemApi()
 
   return (
     <>
@@ -32,43 +32,53 @@ const ItemCard = ({ data, setDataListInitial }: CardProps) => {
         </div>
         <div className="card-body">
           <blockquote className="blockquote mb-0">
-            <p> 類別：</p>
-            <p className="fs-5">
-              品名：<span className="fw-bold">{data.name}</span>
-            </p>
-            <div className="mb-3 row align-items-center">
-              <label className=" col-4" htmlFor="itemNumber">
+            <section className="ms-3">
+            <div>
+              <p> 類別：{data.type}</p>
+            </div>
+            <div>
+              <p className="fs-5">
+                品名：<span className="fw-bold">{data.name}</span>
+              </p>
+            </div>
+            <div>
+              <p> 單位：{data.unit}</p>
+            </div>
+            <div className="mb-3 d-flex align-items-center">
+              <label className=" d-block" htmlFor="itemNumber">
                 庫存：
               </label>
               <input
                 type="number"
                 id="itemNumber"
-                className="form-control col"
+                className="form-control item-number-input"
                 value={itemNum}
                 onChange={(e) => {
                   setItemNum(Number(e.target.value));
                 }}
               />
             </div>
-            <div className="p-3 d-flex justify-content-center gap-5">
+            <div>
+              <p className="fs-5">
+                備註：<span className="">{data.remark}</span>
+              </p>
+            </div>
+            </section>
+            <div className="p-2 d-flex justify-content-center gap-4 btn-num-section">
               <button
-                className="fs-4 m-1 btn btn-info"
+                className="fs-4 m-1 btn-num plus"
                 onClick={() => setItemNum(itemNum + 1)}
-              >
-                +
-              </button>
+              ></button>
               <button
-                className="fs-4 m-1 btn btn-info"
+                className="fs-4 m-1 btn-num minus"
                 onClick={() => setItemNum(itemNum - 1)}
-              >
-                -
-              </button>
+              ></button>
             </div>
           </blockquote>
         </div>
         <button
-          className="btn btn-primary"
-          onClick={async() => {
+          className=" btn-save"
+          onClick={async () => {
             const dataUpdated = updateNumber(data, itemNum);
             await updateItemApi(dataUpdated)
             await getItemsApi(setDataListInitial)
@@ -104,8 +114,11 @@ const ItemCard = ({ data, setDataListInitial }: CardProps) => {
 
 interface ItemData {
   _id: string;
+  type: string;
   name: string;
+  unit: string;
   in_stock: number;
+  remark: string;
 }
 
 function updateNumber(data: ItemData, num: number) {
@@ -114,40 +127,5 @@ function updateNumber(data: ItemData, num: number) {
     in_stock: num,
   };
 }
-
-// async function submit(data: ItemData,updateItem) {
-//     const res = await updateItem({data}).unwrap()
-//   const {
-//     header: { code, message },
-//   } = res;
-//   if (code === "0000") {
-//     showMsgBox({
-//       content: `已成功更新${data.name}數量!`,
-//       titleImg: "success",
-//       title: "更新成功",
-//       mainBtn: { label: "我知道了"},
-//     });
-//   } else {
-//     errorService.showErrorMsg(message);
-//   }
-// }
-
-// async function deleteItem(data: { _id: string; name: string },deleteItems) {
-//   const id = data._id;
-//   const res = await deleteItems({id}).unwrap()
-//   const {
-//     header: { code, message },
-//   } = res;
-//   if (code === "0000") {
-//     showMsgBox({
-//       content: `已成功刪除${data.name}!`,
-//       titleImg: "success",
-//       title: "成功",
-//       mainBtn: { label: "我知道了" },
-//     });
-//   } else {
-//     errorService.showErrorMsg(message);
-//   }
-// }
 
 export default ItemCard;
