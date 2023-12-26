@@ -49,12 +49,16 @@ const ItemCard = ({ data, setDataListInitial }: CardProps) => {
                 庫存：
               </label>
               <input
-                type="number"
+                type="text"
                 id="itemNumber"
                 className="form-control item-number-input"
                 value={itemNum}
                 onChange={(e) => {
-                  setItemNum(Number(e.target.value));
+                  const value = e.target.value
+                  if (isNaN(Number(value))) {
+                    return
+                  }
+                  setItemNum(Number(value));
                 }}
               />
             </div>
@@ -129,3 +133,9 @@ function updateNumber(data: ItemData, num: number) {
 }
 
 export default ItemCard;
+
+
+const handleFocus = (event) => {
+  console.log('123')
+  event.target.select();
+}
