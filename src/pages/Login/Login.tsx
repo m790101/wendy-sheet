@@ -81,7 +81,7 @@ const Login = () => {
             <div className="login p-4">
                 <section>
                     <div className="w-100 d-flex justify-content-center fs-2 fw-bold">
-                        <p>清點清點一直點</p>
+                        <p>點點點一直點</p>
                     </div>
                 </section>
 
