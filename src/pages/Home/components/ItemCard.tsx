@@ -133,9 +133,3 @@ function updateNumber(data: ItemData, num: number) {
 }
 
 export default ItemCard;
-
-
-const handleFocus = (event) => {
-  console.log('123')
-  event.target.select();
-}
