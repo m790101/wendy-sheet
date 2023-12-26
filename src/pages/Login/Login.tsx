@@ -61,20 +61,21 @@ const Login = () => {
                     content: `登入成功!`,
                     titleImg: "success",
                     title: "成功",
-                    mainBtn: { label: "我知道了", onClick: () => navigate('/main/home') },
+                    mainBtn: { label: "我知道了", onClick: () =>{
+                         navigate('/main/home') }},
                 })
 
             }
-            handleResetForm()
+            // handleResetForm()
 
         },
     })
 
-    const handleResetForm = () => {
-        formik.resetForm({
-            values: initialValues,
-        })
-    }
+    // const handleResetForm = () => {
+    //     formik.resetForm({
+    //         values: initialValues,
+    //     })
+    // }
 
     return (
         <>
