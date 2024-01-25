@@ -1,14 +1,10 @@
 import { get, post } from "../setup/httpClient";
 import constant from "../constant/development";
+import ItemData from "../interface/itemData";
 
 const url = constant.apiUrl;
 
-interface ItemData{
-  _id:string,
-  name:string
-  in_stock:number,
 
-}
 
 interface ItemAddData{
   itemName:string

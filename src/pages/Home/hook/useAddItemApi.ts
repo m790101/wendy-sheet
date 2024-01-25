@@ -5,7 +5,7 @@ import { showMsgBox } from "../../../utils/helpers/msgHelper"
 export default () => {
     const [addItems] = Api01.useAddItemsMutation()
 
-const addItemsApi = async (data:ItemData) => {
+const addItemsApi = async (data:ItemDataAdd) => {
     const res = await addItems({data}).unwrap()
     const { header: { code, message } } = res
 
@@ -24,8 +24,10 @@ const addItemsApi = async (data:ItemData) => {
 return {addItemsApi}
 }
 
-interface ItemData{
+interface ItemDataAdd{
     itemName:string,
     itemNumber:number,
-  
+    itemUnit:string,
+    itemType:string,
+    itemRemark:string,
   }

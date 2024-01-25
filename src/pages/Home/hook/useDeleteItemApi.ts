@@ -1,3 +1,4 @@
+import ItemData from "../../../interface/itemData";
 import Api01 from "../../../service/apiService/apiList/api01";
 import errorService from "../../../service/errorService";
 import { showMsgBox } from "../../../utils/helpers/msgHelper";
@@ -25,8 +26,3 @@ export default () => {
   return { deleteItemsApi };
 };
 
-interface ItemData {
-    _id: string;
-    name: string;
-    in_stock: number;
-  }

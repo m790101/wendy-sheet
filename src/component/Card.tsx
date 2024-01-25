@@ -4,6 +4,7 @@ import { showMsgBox } from "../utils/helpers/msgHelper";
 import errorService from "../service/errorService";
 import itemApi from "../api/itemApi";
 import React from "react";
+import ItemData from "../interface/itemData";
 
 interface CardProps {
   data: ItemData;
@@ -99,11 +100,6 @@ const Card = ({ data, setIsRefresh }: CardProps) => {
   );
 };
 
-interface ItemData {
-  _id: string;
-  name: string;
-  in_stock: number;
-}
 
 function updateNumber(data: ItemData, num: number) {
   return {

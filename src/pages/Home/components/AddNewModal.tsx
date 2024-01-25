@@ -9,7 +9,7 @@ import useAddItemApi from "../hook/useAddItemApi"
 import useGetTypesApi from "../hook/useGetTypesApi"
 
 const initialValues = {
-    itemType: [],
+    itemType: "",
     itemUnit: "",
     itemName: "",
     itemNumber: 0,
@@ -50,7 +50,6 @@ const AddNewModal = ({ isVisible, setIsVisible, setDataListInitial }: AddNewModa
         validationSchema,
         enableReinitialize: true,
         onSubmit: async (values) => {
-            // await handleAddSubmit(values,addItems)
             handleResetForm()
             await addItemsApi(values)
             await getItemsApi(setDataListInitial)
@@ -119,7 +118,7 @@ const AddNewModal = ({ isVisible, setIsVisible, setDataListInitial }: AddNewModa
                         {typeList.map((type:TypeData) => (
                             <MenuItem
                                 key={type._id}
-                                value={type.name}
+                                value={type.type}
                             >
                                 {type.name}
                             </MenuItem>
@@ -202,6 +201,7 @@ const AddNewModal = ({ isVisible, setIsVisible, setDataListInitial }: AddNewModa
 interface TypeData {
     _id: string;
     name: string;
+    type: string;
   }
 
 

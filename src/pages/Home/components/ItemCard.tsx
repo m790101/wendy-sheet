@@ -3,6 +3,8 @@ import FormModal from "../../../component/FormModal";
 import useGetItemApi from "../hook/useGetItemApi";
 import useDeleteItemApi from "../hook/useDeleteItemApi";
 import useUpdateItemApi from "../hook/useUpdateItemApi";
+import enumList from "../../../enum/enumList";
+import ItemData from "../../../interface/itemData";
 
 interface CardProps {
   data: ItemData;
@@ -33,40 +35,40 @@ const ItemCard = ({ data, setDataListInitial }: CardProps) => {
         <div className="card-body">
           <blockquote className="blockquote mb-0">
             <section className="ms-3">
-            <div>
-              <p> 類別：{data.type}</p>
-            </div>
-            <div>
-              <p className="fs-5">
-                品名：<span className="fw-bold">{data.name}</span>
-              </p>
-            </div>
-            <div>
-              <p> 單位：{data.unit}</p>
-            </div>
-            <div className="mb-3 d-flex align-items-center">
-              <label className=" d-block" htmlFor="itemNumber">
-                庫存：
-              </label>
-              <input
-                type="text"
-                id="itemNumber"
-                className="form-control item-number-input"
-                value={itemNum}
-                onChange={(e) => {
-                  const value = e.target.value
-                  if (isNaN(Number(value))) {
-                    return
-                  }
-                  setItemNum(Number(value));
-                }}
-              />
-            </div>
-            <div>
-              <p className="fs-5">
-                備註：<span className="">{data.remark}</span>
-              </p>
-            </div>
+              <div>
+                <p> 類別：{checkType(data.type)}</p>
+              </div>
+              <div>
+                <p className="fs-5">
+                  品名：<span className="fw-bold">{data.name}</span>
+                </p>
+              </div>
+              <div>
+                <p> 單位：{data.unit}</p>
+              </div>
+              <div className="mb-3 d-flex align-items-center">
+                <label className=" d-block" htmlFor="itemNumber">
+                  庫存：
+                </label>
+                <input
+                  type="text"
+                  id="itemNumber"
+                  className="form-control item-number-input"
+                  value={itemNum}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    if (isNaN(Number(value))) {
+                      return
+                    }
+                    setItemNum(Number(value));
+                  }}
+                />
+              </div>
+              <div>
+                <p className="fs-5">
+                  備註：<span className="">{data.remark}</span>
+                </p>
+              </div>
             </section>
             <div className="p-2 d-flex justify-content-center gap-4 btn-num-section">
               <button
@@ -116,20 +118,33 @@ const ItemCard = ({ data, setDataListInitial }: CardProps) => {
   );
 };
 
-interface ItemData {
-  _id: string;
-  type: string;
-  name: string;
-  unit: string;
-  in_stock: number;
-  remark: string;
-}
 
 function updateNumber(data: ItemData, num: number) {
   return {
     ...data,
     in_stock: num,
   };
+}
+
+function checkType(type: string) {
+  switch (type) {
+    case enumList.itemType.consumables:
+      return "消耗品";
+    case enumList.itemType.intravenousBackup:
+      return "點滴備品";
+    case enumList.itemType.intravenousMedicine:
+      return "點滴藥品";
+    case enumList.itemType.prpItem:
+      return "PRP 耗材";
+    case enumList.itemType.injectionFridge:
+      return "冰箱針劑";
+    case enumList.itemType.metagenics:
+      return "Metagenics";
+    case enumList.itemType.metagenicsCalc:
+      return "Metagenics 開封精算";
+    default:
+      return "";
+  }
 }
 
 export default ItemCard;

@@ -1,16 +1,10 @@
 import Papa from "papaparse";
 import exportData from "../../../utils/hooks/exportData";
+import { memo } from "react";
+import ItemData from "../../../interface/itemData";
 
 
-interface ItemData {
-    _id: string;
-    type: string;
-    name: string;
-    unit: string;
-    in_stock: number;
-    remark: string;
-    __v: string;
-  }
+
 
 
 
@@ -34,4 +28,5 @@ const ExportFileBtn = ({dataList}: {dataList: ItemData[]}) => {
 }
 
 
-export default ExportFileBtn
+const MemoizedExportFileBtn = memo(ExportFileBtn);
+export default MemoizedExportFileBtn;

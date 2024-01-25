@@ -1,15 +1,8 @@
+import ItemData from "../../../interface/itemData";
 import Api01 from "../../../service/apiService/apiList/api01";
 import errorService from "../../../service/errorService";
 import { showMsgBox } from "../../../utils/helpers/msgHelper";
 
-interface ItemData {
-    _id: string;
-    type: string;
-    name: string;
-    unit: string;
-    in_stock: number;
-    remark: string;
-  }
 
 
 export default () => {
@@ -26,6 +19,7 @@ export default () => {
         title: "更新成功",
         mainBtn: { label: "我知道了" },
       });
+
     } else {
       errorService.showErrorMsg(message);
     }
